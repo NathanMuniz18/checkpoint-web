@@ -10,17 +10,17 @@ export async function renderPerfil(root: HTMLElement): Promise<void> {
       <div class="profile-layout">
         <aside class="profile-summary neon-card"><div class="avatar">${perfil.foto ? `<img src="${escapeHtml(perfil.foto)}" alt="Foto de ${escapeHtml(perfil.username)}">` : `<span>${escapeHtml(perfil.username.slice(0, 2).toUpperCase())}</span>`}</div><p class="online">● JOGADOR ONLINE</p><h2>${escapeHtml(perfil.username)}</h2><p>${escapeHtml(perfil.email)}</p><div class="profile-meta"><span>MEMBRO DESDE</span><b>${new Date(perfil.criado_em).toLocaleDateString('pt-BR')}</b></div></aside>
         <div class="profile-form neon-card"><div class="card-kicker">EDITAR PERFIL <span>ID ${perfil.id}</span></div><div id="profile-message" class="message" hidden></div>
-          <form id="profile-form"><label>USUÁRIO<input value="${escapeHtml(perfil.username)}" disabled><small>O nome de usuário não pode ser alterado.</small></label><label>E-MAIL<input value="${escapeHtml(perfil.email)}" disabled></label><label>URL DA FOTO<input name="foto" type="url" value="${escapeHtml(perfil.foto)}" placeholder="https://exemplo.com/sua-foto.jpg"></label><label>BIO<textarea name="bio" maxlength="500" rows="6" placeholder="Conte um pouco sobre sua vida gamer...">${escapeHtml(perfil.bio)}</textarea></label><div class="button-row"><button class="btn btn-primary" type="submit">SALVAR ALTERAÇÕES</button><a class="btn btn-ghost" href="#/trocar-senha">TROCAR SENHA</a></div></form>
+          <form id="profile-form"><label>USUÁRIO<input value="${escapeHtml(perfil.username)}" disabled><small>O nome de usuário não pode ser alterado.</small></label><label>E-MAIL<input value="${escapeHtml(perfil.email)}" disabled></label><label>URL DA FOTO<input name="foto" type="url" value="${escapeHtml(perfil.foto)}" placeholder="https://exemplo.com/sua-foto.jpg"></label><label>FRASE DE AÇÃO<textarea name="bio" maxlength="500" rows="6" placeholder="Conte um pouco sobre sua vida gamer...">${escapeHtml(perfil.bio)}</textarea></label><div class="button-row"><button class="btn btn-primary" type="submit">SALVAR ALTERAÇÕES</button><a class="btn btn-ghost" href="#/trocar-senha">TROCAR SENHA</a></div></form>
         </div>
-      </div></section>`, 'perfil'); bindShell(); bindProfileForm();
+      </div></section>`, 'perfil'); bindShell(); bindProfileForm(root);
   } catch (error) { root.querySelector('.loading')!.textContent = error instanceof Error ? error.message : 'Erro ao carregar perfil.'; }
 }
 
-function bindProfileForm(): void {
+function bindProfileForm(root: HTMLElement): void {
   document.querySelector<HTMLFormElement>('#profile-form')?.addEventListener('submit', async (event) => {
     event.preventDefault(); const form = event.currentTarget as HTMLFormElement; const data = Object.fromEntries(new FormData(form));
     const button = form.querySelector<HTMLButtonElement>('button'); setBusy(button, true, 'SALVANDO...');
-    try { await api.patch('/api/usuarios/perfil/atualizar/', data); message(document.querySelector('#profile-message'), 'Perfil salvo com sucesso.', 'success'); }
+    try { await api.patch('/api/usuarios/perfil/atualizar/', data); await renderPerfil(root); }
     catch (error) { message(document.querySelector('#profile-message'), error instanceof Error ? error.message : 'Erro ao salvar perfil.', 'error'); }
     finally { setBusy(button, false); }
   });

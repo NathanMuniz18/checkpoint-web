@@ -1,6 +1,6 @@
 import { isAuthenticated } from './auth';
 import { renderHome } from './pages/home';
-import { renderLogin, renderRegistro } from './pages/authPages';
+import { renderEsqueciSenha, renderLogin, renderRedefinirSenha, renderRegistro } from './pages/authPages';
 import { renderPerfil, renderTrocarSenha } from './pages/perfil';
 import { renderJornada } from './pages/jornada';
 import { renderConquistas } from './pages/conquistas';
@@ -19,6 +19,8 @@ export async function route(): Promise<void> {
     case 'home': await renderHome(root); break;
     case 'login': renderLogin(root); break;
     case 'registro': renderRegistro(root); break;
+    case 'esqueci-senha': renderEsqueciSenha(root); break;
+    case 'redefinir-senha': renderRedefinirSenha(root); break;
     case 'perfil': await renderPerfil(root); break;
     case 'trocar-senha': renderTrocarSenha(root); break;
     case 'jornada': await renderJornada(root); break;

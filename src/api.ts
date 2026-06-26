@@ -83,3 +83,5 @@ export const api = {
 
 export const loginRequest = (username: string, password: string) => api.post<AuthTokens>('/api/token/', { username, password }, false);
 export const registerRequest = (data: object) => api.post<unknown>('/api/usuarios/registrar/', data, false);
+export const forgotPasswordRequest = (email: string) => api.post<unknown>('/api/usuarios/esqueci-senha/', { email }, false);
+export const resetPasswordRequest = (data: object) => api.post<unknown>('/api/usuarios/redefinir-senha/', data, false);

@@ -1,7 +1,7 @@
 import { clearTokens, getAccessToken, getRefreshToken, saveTokens } from './auth';
 import type { ApiErrorBody, AuthTokens } from './types';
 
-export const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000').replace(/\/$/, '');
+export const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || 'https://checkpoint-api-7z0m.onrender.com').replace(/\/$/, '');
 
 export class ApiError extends Error {
   constructor(public status: number, public data: ApiErrorBody | null, message: string) {

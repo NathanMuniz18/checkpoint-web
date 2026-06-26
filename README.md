@@ -31,13 +31,14 @@ npm run preview
 
 ## Configuração
 
-A URL do backend é lida da variável abaixo. Sem um arquivo `.env`, o fallback é `http://localhost:8000`.
+A URL do backend é lida da variável abaixo. Em produção, o build usa o backend publicado no Render.
 
 ```env
-VITE_API_BASE_URL=http://localhost:8000
+VITE_API_BASE_URL=https://checkpoint-api-7z0m.onrender.com
 ```
 
-O backend precisa permitir a origem do frontend no CORS (`http://localhost:5173` durante o desenvolvimento).
+Para desenvolvimento local com a API rodando na máquina, crie um `.env` com `VITE_API_BASE_URL=http://localhost:8000`.
+O backend precisa permitir a origem do frontend no CORS (`http://localhost:5173` durante o desenvolvimento e `https://nathanmuniz18.github.io` em produção).
 
 ## Como usar
 
